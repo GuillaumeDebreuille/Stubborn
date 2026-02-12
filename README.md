@@ -17,7 +17,7 @@ composer install
 
 ---
 
-##I mporter la base de données 
+## Importer la base de données 
 
 Le fichier SQL est à la racine du projet : bdd_s02.sql
 
