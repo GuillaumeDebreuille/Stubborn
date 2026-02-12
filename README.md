@@ -30,13 +30,13 @@ Créer une base de données et importer le fichier via phpMyAdmin
 Accédez à l’accueil : http://localhost:8000
 
 Les comptes présent de base.
-- Un compte utilisateur simple
-  mail : test3535@gmail.com
-  mdp : 123456
+### Un compte utilisateur simple
+- mail : test3535@gmail.com
+- mdp : 123456
   
-- Un compte admin
-  mail : admin@gmail.com
-  mdp : 123456
+### Un compte admin
+- mail : admin@gmail.com
+- mdp : 123456
 
 ---
 
