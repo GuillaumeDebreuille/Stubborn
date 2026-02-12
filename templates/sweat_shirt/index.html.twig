@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SweatShirt index{% endblock %}
+
+{% block body %}
+    <h1>SweatShirt index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sweat_shirt in sweat_shirts %}
+            <tr>
+                <td>{{ sweat_shirt.id }}</td>
+                <td>{{ sweat_shirt.name }}</td>
+                <td>{{ sweat_shirt.price }}</td>
+                <td>
+                    <a href="{{ path('app_sweat_shirt_show', {'id': sweat_shirt.id}) }}">show</a>
+                    <a href="{{ path('app_sweat_shirt_edit', {'id': sweat_shirt.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sweat_shirt_new') }}">Create new</a>
+{% endblock %}

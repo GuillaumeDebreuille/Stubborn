@@ -1,0 +1,32 @@
+<a href="{{ path('app_shop') }}">Retour à la boutique</a><br>
+<a href="{{ path('app_home') }}">Accueil</a>
+<hr>
+
+<h1>{{ sweat.name }}</h1>
+<img src="{{ asset('uploads/sweatshirts/' ~ sweat.image) }}" alt="{{ sweat.name }}" width="200">
+<p>Prix : {{ sweat.price }} €</p>
+
+<h2>Stocks par taille</h2>
+<table>
+    <tr>
+        <th>Taille</th>
+        <th>Quantité</th>
+    </tr>
+    {% for stock in stocks %}
+        <tr>
+            <td>{{ stock.size }}</td>
+            <td>{{ stock.quantity }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<form method="post" action="{{ path('cart_add', { id: sweat.id }) }}">
+    <label for="taille">Taille :</label>
+    <select name="taille" id="taille" required>
+        <option value="">Sélectionnez une taille</option>
+        {% for stock in stocks %}
+            <option value="{{ stock.size }}">{{ stock.size }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Ajouter au panier</button>
+</form>

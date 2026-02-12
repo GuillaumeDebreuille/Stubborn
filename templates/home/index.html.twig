@@ -1,0 +1,39 @@
+<h1>Accueil</h1> <hr>
+
+<h2>Bienvenue chez Stubborn</h2>
+
+<div>Stubborn, c’est la marque de sweatshirts qui ne transige pas sur la qualité ni sur le style.
+Pensée pour les esprits libres et déterminés, notre boutique en ligne te propose des sweats confortables, modernes et durables, disponibles en plusieurs tailles et coloris.</div>
+<br>
+<div>Que tu sois à la recherche d’un vêtement pour affirmer ta personnalité ou simplement pour te sentir bien au quotidien, Stubborn t’accompagne avec des produits soigneusement sélectionnés et un stock toujours à jour.</div>
+<br>
+<div>Découvre notre collection, ajoute tes coups de cœur au panier, et profite d’une expérience d’achat simple, sécurisée et rapide.</div>
+<br>
+<div>Rejoins la communauté Stubborn : la qualité, c’est notre obstination !</div>
+<br><hr>
+
+{% if app.user %}
+    <h3>Vous êtes connecté</h3>
+    <a href="{{ path('app_home') }}">Accueil</a><br>
+    <a href="{{ path('app_shop') }}">Boutique</a><br>
+    <a href="{{ path('cart_show') }}">Voir mon panier</a>
+    <br><br>
+    <a href="{{ path('app_logout') }}">Se déconnecter</a><br><br>
+    <hr>
+    <h3>Voici quelques sweats. Cliquez sur le bouton pour en voir plus.</h3>
+    <a href="{{ path('app_shop') }}">Accéder à la boutique</a><br><br>
+{% else %}
+    <h3>Connectez-vous ou inscrivez-vous</h3>
+    <a href="{{ path('app_home') }}">Accueil</a><br>
+    <a href="{{ path('app_login') }}">Se connecter</a><br>
+    <a href="{{ path('app_register') }}">S’inscrire</a><br><br>
+    <hr>
+    <h3>Connectez-vous pour voir nos sweats !</h3>  
+{% endif %}
+
+{% for sweat in sweats|slice(0, 3) %}
+    <div>
+        <img src="{{ asset('uploads/sweatshirts/' ~ sweat.image) }}" alt="{{ sweat.name }}">
+        <p>{{ sweat.name }}</p>
+    </div>
+{% endfor %}

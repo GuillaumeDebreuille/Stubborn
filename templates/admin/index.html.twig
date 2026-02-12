@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    <h1>Espace Administration</h1>
+
+    <ul>
+        <li>
+            <strong>Produits :</strong> 
+            <a href="{{ path('app_sweat_shirt_index') }}">Liste des pulls (Ajouter / Modifier / Supprimer)</a>
+        </li>
+        <li>
+            <strong>Stocks :</strong> 
+            <a href="{{ path('app_stock_index') }}">Gestion des tailles et quantités</a>
+        </li>
+    </ul>
+
+    <hr>
+    
+    <a href="/">Retour au site public</a>
+{% endblock %}

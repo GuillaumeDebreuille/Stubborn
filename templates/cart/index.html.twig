@@ -1,0 +1,26 @@
+<h1>Mon panier</h1>
+<a href="{{ path('app_home') }}">Accueil</a><br>
+<a href="{{ path('app_shop') }}">Boutique</a><br>
+<br><hr>
+
+{% set total = 0 %}
+
+{% for item in items %}
+    {% set lineTotal = item.qty * item.sweat.price %}
+    {% set total = total + lineTotal %}
+
+    <div>
+        {{ item.sweat.name }} - {{ item.size }} x {{ item.qty }}
+        — {{ item.sweat.price }} € / unité
+        — <strong>{{ lineTotal|number_format(2, '.', ' ') }} €</strong>
+        <a href="{{ path('cart_remove', { id: item.sweat.id, size: item.size }) }}">Retirer</a>
+    </div>
+{% else %}
+    <p>Panier vide.</p>
+{% endfor %}
+
+<hr>
+<p><strong>Total : {{ total|number_format(2, '.', ' ') }} €</strong></p>
+<form action="{{ path('app_checkout') }}" method="GET">
+    <button type="submit">Payer</button>
+</form>

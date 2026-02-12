@@ -1,0 +1,17 @@
+<h1>Boutique</h1>
+<a href="{{ path('cart_show') }}">Voir mon panier</a><br>
+<a href="{{ path('app_home') }}">Retour à l'accueil</a>
+<hr>
+
+<div class="catalogue">
+    {% for sweat in sweats %}
+        <div class="sweat-item">
+            <img src="{{ asset('uploads/sweatshirts/' ~ sweat.image) }}" alt="{{ sweat.name }}" width="150">
+            <p><strong>{{ sweat.name }}</strong></p>
+            <p>Prix : {{ sweat.price }} €</p>
+            <a href="{{ path('shop_show', {'id': sweat.id}) }}">Voir</a>
+        </div>
+    {% else %}
+        <p>Aucun sweat-shirt disponible.</p>
+    {% endfor %}
+</div>

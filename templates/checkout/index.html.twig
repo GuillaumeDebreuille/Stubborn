@@ -1,0 +1,16 @@
+{% if stockErrors is not empty %}
+    <h2>Erreur de stock :</h2>
+    <ul>
+        {% for error in stockErrors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('cart_show') }}">Retour au panier</a>
+{% else %}
+    <h2>Infos bancaires (simulation)</h2>
+    <form method="post">
+        <input type="text" name="card" placeholder="Numéro de carte" required>
+        <input type="text" name="name" placeholder="Nom du titulaire" required>
+        <button type="submit">Valider le paiement</button>
+    </form>
+{% endif %}
