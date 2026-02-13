@@ -1,7 +1,29 @@
-<h1>Mon panier</h1>
-<a href="{{ path('app_home') }}">Accueil</a><br>
-<a href="{{ path('app_shop') }}">Boutique</a><br>
-<br><hr>
+<div class="home-header">
+    <div class="home-header-logo">
+        <img src="{{ asset('uploads/sweatshirts/logo.png') }}" alt="Logo Stubborn" width="150">
+        <h3>Des Sweatshirts pour tous !</h3>
+    </div>
+
+    <div class="home-header-nav">
+        {% if app.user %}
+            <a href="{{ path('app_home') }}">Accueil</a><br>
+            <a href="{{ path('app_shop') }}">Boutique</a><br>
+            <a href="{{ path('cart_show') }}">Panier</a>
+            <br><br>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a><br><br>
+        {% else %}
+            <a href="{{ path('app_home') }}">Accueil</a><br>
+            <a href="{{ path('app_login') }}">Se connecter</a><br>
+            <a href="{{ path('app_register') }}">S’inscrire</a><br><br>
+        {% endif %}
+    </div>
+</div>
+<hr>
+
+
+
+
+
 
 {% set total = 0 %}
 
@@ -9,18 +31,137 @@
     {% set lineTotal = item.qty * item.sweat.price %}
     {% set total = total + lineTotal %}
 
-    <div>
-        {{ item.sweat.name }} - {{ item.size }} x {{ item.qty }}
-        — {{ item.sweat.price }} € / unité
-        — <strong>{{ lineTotal|number_format(2, '.', ' ') }} €</strong>
-        <a href="{{ path('cart_remove', { id: item.sweat.id, size: item.size }) }}">Retirer</a>
+    <div class="cart-item">
+        <div class="cart-img">
+            <img src="{{ asset('uploads/sweatshirts/' ~ item.sweat.image) }}" alt="{{ item.sweat.name }}" width="100">
+        </div>
+        <div class="cart-info">
+            <div><strong>Nom :</strong> {{ item.sweat.name }}</div>
+            <div><strong>Prix :</strong> {{ item.sweat.price }} €</div>
+            <div><strong>Taille :</strong> {{ item.size }}</div>
+        </div>
+        <div class="cart-action">
+            <a href="{{ path('cart_remove', { id: item.sweat.id, size: item.size }) }}">
+                <button class="cart-remove-btn">Retirer du panier</button>
+            </a>
+        </div>
     </div>
 {% else %}
     <p>Panier vide.</p>
 {% endfor %}
 
-<hr>
-<p><strong>Total : {{ total|number_format(2, '.', ' ') }} €</strong></p>
-<form action="{{ path('app_checkout') }}" method="GET">
-    <button type="submit">Payer</button>
-</form>
+<div class="cart-footer">
+    <div class="cart-total">
+        <strong>TOTAL : {{ total|number_format(2, '.', ' ') }} €</strong>
+    </div>
+    <div class="cart-buttons">
+        <form action="{{ path('app_checkout') }}" method="GET" style="display:inline;">
+            <button type="submit" class="cart-btn cart-btn-red">Finaliser ma commande</button>
+        </form>
+        <a href="{{ path('app_shop') }}">
+            <button class="cart-btn cart-btn-green">Continuer mes achats</button>
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+
+<style>
+    .home-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .home-header-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .home-header-nav {
+        display: flex;
+        flex-direction: row;
+    }
+    .home-header-nav a {
+        height: 25px;
+        margin: 15px;
+        text-decoration: none;
+        color: black;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .home-header-nav a:hover {
+        color: #00b445;
+    }
+    .home-header-nav a:active {
+        color: #29864d;
+    }
+
+
+
+
+    .cart-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    margin: 15px 0;
+    padding: 15px;
+    background: #fff;
+    }
+    .cart-img img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    }
+    .cart-info {
+    flex: 1;
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    }
+    .cart-action {
+    margin-left: 20px;
+    }
+    .cart-remove-btn {
+    border: 1px solid #222;
+    background: #fff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    }
+    .cart-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    }
+    .cart-total {
+    border: 1px solid #222;
+    padding: 10px 20px;
+    margin-right: 30px;
+    background: #fff;
+    }
+    .cart-buttons {
+    display: flex;
+    gap: 10px;
+    }
+    .cart-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+    .cart-btn-red {
+    background: #f8d7da;
+    color: #a94442;
+    }
+    .cart-btn-green {
+    background: #d4edda;
+    color: #155724;
+    }
+</style>
