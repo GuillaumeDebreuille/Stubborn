@@ -1,11 +1,39 @@
-<h1>Boutique</h1>
-<a href="{{ path('cart_show') }}">Voir mon panier</a><br>
-<a href="{{ path('app_home') }}">Retour à l'accueil</a>
+<div class="shop-header">
+    <div class="shop-header-logo">
+        <img src="{{ asset('uploads/sweatshirts/logo.png') }}" alt="Logo Stubborn" width="150">
+        <h3>Des Sweatshirts pour tous !</h3>
+    </div>
+
+    <div class="shop-header-nav">
+        {% if app.user %}
+            <a href="{{ path('app_home') }}">Accueil</a><br>
+            <a href="{{ path('app_shop') }}">Boutique</a><br>
+            <a href="{{ path('cart_show') }}">Panier</a>
+            <br><br>
+            <a href="{{ path('app_logout') }}">Se déconnecter</a><br><br>
+        {% else %}
+            <a href="{{ path('app_home') }}">Accueil</a><br>
+            <a href="{{ path('app_login') }}">Se connecter</a><br>
+            <a href="{{ path('app_register') }}">S’inscrire</a><br><br>
+        {% endif %}
+    </div>
+</div>
+
 <hr>
 
-<div class="catalogue">
+<label for="price-range">Fourchette de prix :</label>
+<select id="price-range">
+    <option value="all">Tous</option>
+    <option value="10-29">10 à 29 €</option>
+    <option value="30-35">30 à 35 €</option>
+    <option value="36-50">36 à 50 €</option>
+</select>
+
+<br><br>
+
+<div class="shop-sweats">
     {% for sweat in sweats %}
-        <div class="sweat-item">
+        <div class="shop-sweats-item" data-price="{{ sweat.price }}">
             <img src="{{ asset('uploads/sweatshirts/' ~ sweat.image) }}" alt="{{ sweat.name }}" width="150">
             <p><strong>{{ sweat.name }}</strong></p>
             <p>Prix : {{ sweat.price }} €</p>
@@ -15,3 +43,63 @@
         <p>Aucun sweat-shirt disponible.</p>
     {% endfor %}
 </div>
+
+<style>
+    .shop-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .shop-header-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .shop-header-nav {
+        display: flex;
+        flex-direction: row;
+    }
+    .shop-header-nav a {
+        height: 25px;
+        margin: 15px;
+        text-decoration: none;
+        color: black;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .shop-header-nav a:hover {
+        color: #00b445;
+
+    }
+    .shop-header-nav a:active {
+        color: #29864d;
+    }
+
+    .shop-sweats {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .shop-sweats-item {
+        padding: 15px;
+        margin: 20px;
+        border: solid 1px black;
+        border-radius: 10px;
+    }
+</style>
+
+
+
+<script>
+document.getElementById('price-range').addEventListener('change', function() {
+    const value = this.value;
+    document.querySelectorAll('.shop-sweats-item').forEach(function(item) {
+        const price = parseFloat(item.getAttribute('data-price'));
+        let show = false;
+        if (value === 'all') show = true;
+        if (value === '10-29' && price >= 10 && price < 30) show = true;
+        if (value === '30-35' && price >= 30 && price <= 35) show = true;
+        if (value === '36-50' && price > 35 && price <= 50) show = true;
+        item.style.display = show ? '' : 'none';
+    });
+});
+</script>

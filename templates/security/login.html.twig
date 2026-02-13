@@ -3,32 +3,113 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
-        </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+<div class="home-header">
+    <div class="home-header-logo">
+        <img src="{{ asset('uploads/sweatshirts/logo.png') }}" alt="Logo Stubborn" width="150">
+        <h3>Des Sweatshirts pour tous !</h3>
     </div>
+    <div class="home-header-nav">
+        <a href="{{ path('app_home') }}">Accueil</a><br>
+        <a href="{{ path('app_login') }}">Se connecter</a><br>
+        <a href="{{ path('app_register') }}">S’inscrire</a><br><br>
+    </div>
+</div><hr>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+
+
+
+
+
+<div class="login-container">
+    <form method="post" class="form-signin">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
+            </div>
+        {% endif %}
+
+        <h3>Se connecter</h3>
+        <label for="inputEmail">Email :</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+        <label for="inputPassword">Mot de passe :</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Se souvenir de moi
+            </label>
+        </div>
+
+        <button class="btn btn-lg btn-primary" type="submit">
+            Se connecter
+        </button>
+        <div class="mdp">Mot de passe oublié</div>
+        <div>Pas de compte ? <button class="btn btn-lg btn-primary" href="{{ path('app_register') }}">S’inscrire</a></div>
+    </form>
+</div>
+{% endblock %}
+
+
+
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .home-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .home-header-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .home-header-nav {
+        display: flex;
+        flex-direction: row;
+    }
+    .home-header-nav a {
+        height: 25px;
+        margin: 15px;
+        text-decoration: none;
+        color: black;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .home-header-nav a:hover {
+        color: #00b445;
+    }
+    .home-header-nav a:active {
+        color: #29864d;
+    }
+
+
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .form-signin {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #000000;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        gap: 10px;
+    }
+    .mdp {
+        text-decoration: underline;
+        color: #00b445;
+        cursor: pointer;
+    }
+</style>
 {% endblock %}

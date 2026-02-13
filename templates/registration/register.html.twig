@@ -3,12 +3,28 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+<div class="home-header">
+    <div class="home-header-logo">
+        <img src="{{ asset('uploads/sweatshirts/logo.png') }}" alt="Logo Stubborn" width="150">
+        <h3>Des Sweatshirts pour tous !</h3>
+    </div>
+    <div class="home-header-nav">
+        <a href="{{ path('app_home') }}">Accueil</a><br>
+        <a href="{{ path('app_login') }}">Se connecter</a><br>
+        <a href="{{ path('app_register') }}">S’inscrire</a><br><br>
+    </div>
+</div> <hr>
+
+
+
+
+
+<div class="register-container">
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
-    <h3>Afin de valider votre compte, vous recevrez un mail de confirmation.</h3>
+    <h3>Créer un compte</h3>
 
     {{ form_errors(registrationForm) }}
 
@@ -21,4 +37,55 @@
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+</div>
+{% endblock %}
+
+
+
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .home-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .home-header-logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .home-header-nav {
+        display: flex;
+        flex-direction: row;
+    }
+    .home-header-nav a {
+        height: 25px;
+        margin: 15px;
+        text-decoration: none;
+        color: black;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .home-header-nav a:hover {
+        color: #00b445;
+    }
+    .home-header-nav a:active {
+        color: #29864d;
+    }
+
+
+    .register-container {
+        padding-bottom: 20px;
+        margin: auto;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        border: 1px solid #000000;
+    }
+</style>
 {% endblock %}
